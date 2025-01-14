@@ -43,14 +43,21 @@ async function run() {
         const data = req.body;
         await client.connect();
         const result = await question.insertOne(data);
-        res
-          .status(201)
-          .json({ message: "Category added successfully", result });
+        res.status(201).json({ message: "Dua added successfully", result });
       } catch (error) {
         console.error(error);
         res.status(500).json({ message: "An error occurred", error });
       } finally {
         await client.close();
+      }
+    });
+    // GET
+    app.get("/api/add-dua", async (req, res) => {
+      try {
+        const result = await question.find().toArray();
+        res.status(200).json(result);
+      } catch (error) {
+        res.status(500).json({ error: "Failed to fetch dua" });
       }
     });
     // Root
