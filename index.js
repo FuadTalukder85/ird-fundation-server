@@ -7,7 +7,7 @@ const port = process.env.PORT || 2025;
 // middleware
 app.use(
   cors({
-    origin: "http://localhost:3000",
+    origin: "https://ird-foundation-eight.vercel.app",
     credentials: true,
   })
 );
@@ -52,7 +52,7 @@ async function run() {
       }
     });
     // GET
-    app.get("/api/add-dua", async (req, res) => {
+    app.get("/api/get-dua", async (req, res) => {
       try {
         const result = await question.find().toArray();
         res.status(200).json(result);
