@@ -52,13 +52,10 @@ async function run() {
       }
     });
     // GET
+
     app.get("/api/get-dua", async (req, res) => {
-      try {
-        const result = await question.find().toArray();
-        res.status(200).json(result);
-      } catch (error) {
-        res.status(500).json({ error: "Failed to fetch dua" });
-      }
+      const result = await question.find().toArray();
+      res.send(result);
     });
     // Root
     app.get("/", (req, res) => {
