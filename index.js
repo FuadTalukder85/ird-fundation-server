@@ -34,14 +34,24 @@ async function run() {
     console.log(
       "Pinged your deployment. You successfully connected to MongoDB!"
     );
-    const db = client.db("enaEma");
+    const db = client.db("irdFoundation");
     const question = db.collection("cat");
 
     // POST
-    app.post("/create-supply", async (req, res) => {
-      const addQuestion = req.body;
-      const result = await question.insertOne(addQuestion);
-      res.send(result);
+    app.post("/api/add-dua", async (req, res) => {
+      try {
+        const data = req.body;
+        await client.connect();
+        const result = await question.insertOne(data);
+        res
+          .status(201)
+          .json({ message: "Category added successfully", result });
+      } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "An error occurred", error });
+      } finally {
+        await client.close();
+      }
     });
     // Root
     app.get("/", (req, res) => {
